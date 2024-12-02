@@ -1,10 +1,24 @@
 from django.shortcuts import render
 
+from rest_framework.decorators import api_view, permission_classes
+
+
+from rest_framework.permissions import AllowAny
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 
+
+def render_register(request):
+    return render(request, 'register.html')  # Ensure 'register.html' exists in your templates directory
+
+def render_login(request):
+    return render(request, 'login.html')  # Ensure 'login.html' exists in your templates directory
+
+
+@permission_classes([AllowAny])
 @api_view(['POST'])
 def register_user(request):
     if request.method == 'POST':
@@ -22,6 +36,9 @@ from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import CustomUser
+
+
+@permission_classes([AllowAny])
 
 @api_view(['POST'])
 def user_login(request):
